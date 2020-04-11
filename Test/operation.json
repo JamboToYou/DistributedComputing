@@ -1,0 +1,95 @@
+{
+	"var": [
+		{
+			"type": "int",
+			"value": "10"
+		},
+		{
+			"type": "int",
+			"value": "12"
+		},
+		{
+			"type": "int",
+			"value": "0"
+		}
+	],
+	"main": {
+		"ret_type": "int",
+		"procedures": [
+			{
+				"operation": "for",
+				"body": {
+					"cond": {
+						"operation": "<",
+						"args": [
+							{
+								"type": "ref",
+								"value": "3"
+							},
+							{
+								"type": "int",
+								"value": "100"
+							}
+						]
+					},
+					"callback": {
+						"operation": "=",
+						"args": [
+							{
+								"type": "ref",
+								"value": "3"
+							},
+							{
+								"type": "op",
+								"value": {
+									"operation": "+",
+									"args": [
+										{
+											"type": "ref",
+											"value": "3"
+										},
+										{
+											"type": "int",
+											"value": "1"
+										}
+									]
+								}
+							}
+						]
+					},
+					"procedures": [
+						{
+							"operation": "=",
+							"args": [
+								{
+									"type": "ref",
+									"value": "0"
+								},
+								{
+									"type": "op",
+									"value": {
+										"operation": "+",
+										"args": [
+											{
+												"type": "ref",
+												"value": "1"
+											},
+											{
+												"type": "ref",
+												"value": "2"
+											},
+											{
+												"type": "ref",
+												"value": "3"
+											}
+										]
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		]
+	}
+}
