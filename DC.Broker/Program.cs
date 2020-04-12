@@ -1,6 +1,7 @@
 ﻿using System;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using Newtonsoft.Json;
+
+using DC.Broker.Entities;
 
 namespace DC.Broker
 {
@@ -8,60 +9,23 @@ namespace DC.Broker
 	{
 		static void Main(string[] args)
 		{
-			Run3();
-		}
+			var bdl = JFParser.Parse("operation.json");
 
-		static void Run1()
-		{
-			IPrinter p1 = new FirstPrinter();
-			IPrinter p2 = new SecondPrinter();
+			var arg0 = bdl.Main.Procedures[0].Body.Callback.Args[0];
+			var arg1 = bdl.Main.Procedures[0].Body.Callback.Args[1];
 
-			Serialize(p1, "firstFormatter.dat");
-			Serialize(p2, "secondFormatter.dat");
-		}
+			Console.WriteLine(arg0.Type);
+			Console.WriteLine(arg1.Type);
+			Console.WriteLine();
 
-		static void Run2()
-		{
-			var p1 = Deserialize<IPrinter>("firstFormatter.dat");
-			var p2 = Deserialize<IPrinter>("secondFormatter.dat");
+			var arg = JsonConvert.DeserializeObject<JFProcedure>(arg1.Value.ToString());
 
-			p1.Print("first");
-			p2.Print("second");
-		}
+			Console.WriteLine(arg.Operation);
+			Console.WriteLine(arg.Args[0].Type);
+			Console.WriteLine(arg.Args[0].Value);
+			Console.WriteLine(arg.Args[1].Type);
+			Console.WriteLine(arg.Args[1].Value);
 
-		static void Run3()
-		{
-			var p1 = Deserialize<IAnotherPrinter>("firstFormatter.dat");
-			var p2 = Deserialize<IAnotherPrinter>("secondFormatter.dat");
-
-			p1.Print("first");
-			p2.Print("second");
-		}
-
-		static void Serialize(IPrinter obj, string fileName)
-		{
-			var fmt = new BinaryFormatter();
-
-			using (var fStream = new FileStream(fileName,
-				FileMode.Create, FileAccess.Write, FileShare.None))
-			{
-				fmt.Serialize(fStream, obj);
-			}
-		}
-
-		static T Deserialize<T>(string fileName)
-		{
-			T printer;
-
-			var fmt = new BinaryFormatter();
-
-			using(var stream = new FileStream(fileName,
-				FileMode.Open, FileAccess.Read, FileShare.None))
-			{
-				printer = (T)fmt.Deserialize(stream);
-			}
-
-			return printer;
 		}
 	}
 }

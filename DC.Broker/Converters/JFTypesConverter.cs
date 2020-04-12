@@ -1,16 +1,16 @@
 using System;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Test.Converters;
 
-namespace Test
+using DC.Broker.Entities;
+
+namespace DC.Broker.Converters
 {
-	public class FUTypesConverter : JsonConverter<FUTypes>
+	public class JFTypesConverter : JsonConverter<JFTypes>
 	{
-		public override FUTypes ReadJson(
+		public override JFTypes ReadJson(
 				JsonReader reader,
 				Type objectType,
-				FUTypes existingValue,
+				JFTypes existingValue,
 				bool hasExistingValue,
 				JsonSerializer serializer)
 		{
@@ -19,40 +19,40 @@ namespace Test
 			switch (val)
 			{
 				case "int":
-					return FUTypes.FU_INT;
+					return JFTypes.JF_INT;
 				case "string":
-					return FUTypes.FU_STRING;
+					return JFTypes.JF_STRING;
 				case "ref":
-					return FUTypes.FU_REF;
+					return JFTypes.JF_REF;
 				case "op":
-					return FUTypes.FU_OPERATION;
+					return JFTypes.JF_OPERATION;
 				default:
-					throw new Exception("[FU]: wrong type");
+					throw new Exception("[JF]: wrong type");
 			}
 		}
 
 		public override void WriteJson(
 				JsonWriter writer,
-				FUTypes value,
+				JFTypes value,
 				JsonSerializer serializer)
 		{
 			string val;
 
 			switch (value) {
-				case FUTypes.FU_INT:
+				case JFTypes.JF_INT:
 					val = "int";
 					break;
-				case FUTypes.FU_STRING:
+				case JFTypes.JF_STRING:
 					val = "string";
 					break;
-				case FUTypes.FU_REF:
+				case JFTypes.JF_REF:
 					val = "ref";
 					break;
-				case FUTypes.FU_OPERATION:
+				case JFTypes.JF_OPERATION:
 					val = "op";
 					break;
 				default:
-					throw new Exception("[FU]: wrong type");
+					throw new Exception("[JF]: wrong type");
 			}
 			writer.WriteValue(val);
 		}

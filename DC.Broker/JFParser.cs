@@ -3,19 +3,21 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Test
+using DC.Broker.Entities;
+
+namespace DC.Broker
 {
-	public class FUParser
+	public class JFParser
 	{
-		public static FUBundle Parse(string fileName)
+		public static JFBundle Parse(string fileName)
 		{
-			FUBundle res;
+			JFBundle res;
 
 			using (var stream = new FileStream(fileName,
 				FileMode.Open, FileAccess.Read, FileShare.None))
 			using (var reader = new StreamReader(stream))
 			{
-				res = JsonConvert.DeserializeObject<FUBundle>(reader.ReadToEnd());
+				res = JsonConvert.DeserializeObject<JFBundle>(reader.ReadToEnd());
 			}
 
 			return res;
